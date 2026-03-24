@@ -1,0 +1,27 @@
+services:
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.good
+    restart: unless-stopped
+    networks:
+      - worker_net
+
+  database:
+    image: postgres:15-alpine
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - db_net
+
+volumes:
+  db_data:
+
+networks:
+  worker_net:
+    driver: bridge
+  db_net:
+    driver: bridge

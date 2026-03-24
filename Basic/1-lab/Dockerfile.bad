@@ -1,0 +1,7 @@
+FROM gcc:latest
+RUN apt-get update
+RUN apt-get install -y cmake nano
+COPY . /app
+WORKDIR /app
+RUN g++ -o worker main.cpp
+CMD ["./worker"]
